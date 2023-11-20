@@ -7,10 +7,11 @@ const Team = require("../models/teams");
 // Create a team
 router.post("/team", async (req, res) => {
   try {
-    const teamMembers = req.body.members; // Assuming the client sends an array of user IDs as members
-
+    const teamMembers = req.body.teamMembers; // Assuming the client sends an array of user IDs as members
+    const name = req.body.name;
+    console.log(teamMembers)
     const selectedUsers = await User.find({ _id: { $in: teamMembers } });
-
+    console.log(selectedUsers)
     const isTeamValid = isTeamValidForCreation(selectedUsers);
 
     if (!isTeamValid) {
@@ -22,7 +23,7 @@ router.post("/team", async (req, res) => {
         });
     }
 
-    await Team.create({ members: selectedUsers });
+    await Team.create({name, members: selectedUsers });
 
     res
       .status(201)

@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
+    default:"https://robohash.org/maximequiomnis.png?size=50x50&set=set1",
     required: true,
   },
   domain: {
