@@ -57,7 +57,6 @@ select {
   background-image: none;
   cursor: pointer;
   width: 100%;
-  margin-left: 20px;
 }
 
 select::-ms-expand {
@@ -65,12 +64,12 @@ select::-ms-expand {
 }
 
 .select {
-  position: relative;
   display: flex;
-  width: 20em;
   height: 3em;
   overflow: hidden;
-  margin-left: 20px;
+  padding: 0 20px;
+  background-color: #f5f5f5;
+  gap: 10px;
 }
 
 .select:hover::after {

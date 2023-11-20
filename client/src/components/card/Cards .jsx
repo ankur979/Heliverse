@@ -4,8 +4,7 @@ import { useDispatch } from "react-redux";
 import { deleteUser } from "../../store/userSlice";
 import Modal from "../modal/Modal";
 
-
-const Cards = ({ user }) => {
+const Cards = ({ user, teamMembers, setTeamMembers }) => {
   const dispatch = useDispatch();
   return (
     <div className="card">
@@ -15,6 +14,7 @@ const Cards = ({ user }) => {
         <div className="grid-child-gender">Gender: {user.gender}</div>
         <div className="grid-child-domain">Domain: {user.domain}</div>
         <div className="grid-child-email">email: {user.email}</div>
+        <div className="grid-child-available">available: {user.available?"true":"false"}</div>
       </div>
       <button
         className="btn draw-border"
@@ -23,6 +23,12 @@ const Cards = ({ user }) => {
         Delete
       </button>
       <Modal user={user} />
+      <button
+        className="btn draw-border"
+        onClick={() => setTeamMembers(new Set([...teamMembers, user._id]))}
+      >
+        Add Member
+      </button>
     </div>
   );
 };

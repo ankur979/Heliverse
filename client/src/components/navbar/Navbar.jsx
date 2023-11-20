@@ -1,13 +1,13 @@
 import React from "react";
 import "./navbar.css";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ setSearch }) => {
   return (
     <nav class="navbar">
       <div class="logo">MUO</div>
       <div className="search">
-        <input type="text" placeholder="search user name" />
+        <input type="text" placeholder="search user name" onChange={(e) => setSearch(e.target.value)} />
       </div>
 
       <ul class="nav-links">
@@ -18,17 +18,17 @@ const Navbar = () => {
 
         <div class="menu">
           <li>
-           <Link to={"/"}>Home</Link>
+            <Link to={"/"}>Home</Link>
           </li>
           <li>
-           <Link to={"/"}>About</Link>
+            <Link to={"/team"}>Team</Link>
           </li>
 
           <li>
-           <Link to={"/"}>Pricing</Link>
+            <Link to={"/"}>Pricing</Link>
           </li>
           <li>
-           <Link to={"/"}>Contact</Link>
+            <Link to={"/"}>Contact</Link>
           </li>
         </div>
       </ul>

@@ -42,4 +42,9 @@
     margin: 0.625rem auto;
     transition: all 250ms;
 }
+.create{
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
   

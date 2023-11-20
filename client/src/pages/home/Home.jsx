@@ -4,16 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../store/userSlice";
 import Cards from "../../components/card/Cards ";
 import Pagination from "react-js-pagination";
+import { Link } from "react-router-dom";
+import ModalTeam from "../../components/modal/ModalTeam";
 
-const Home = () => {
+const Home = ({search}) => {
   const dispatch = useDispatch();
   const { users, userLength } = useSelector((e) => e.users);
   const [activePage, setActivePage] = useState(1);
   const [selectDomain, setSelectDomain] = useState("");
   const [gender, setGender] = useState("");
+  const [teamMembers, setTeamMembers] = useState(new Set([]));
+
   useEffect(() => {
-    dispatch(getUser(activePage, selectDomain, gender));
-  }, [activePage, selectDomain, gender]);
+    dispatch(getUser(activePage, selectDomain, gender,search));
+  }, [activePage, selectDomain, gender,search]);
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -38,7 +42,11 @@ const Home = () => {
         >
           <option value=""> select domain</option>
           {domain.map((d) => {
-            return <option value={d}>{d}</option>;
+            return (
+              <option value={d} key={d}>
+                {d}
+              </option>
+            );
           })}
         </select>
         <select onClick={(e) => setGender(e.target.value)}>
@@ -46,10 +54,24 @@ const Home = () => {
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
+        <Link
+          className="btn draw-border"
+          style={{ textDecoration: "none", margin: "0", width: "27rem" }}
+          to={`/create`}
+        >
+          Create New User
+        </Link>
+        <ModalTeam teamMembers={Array.from(teamMembers)} />
       </div>
       <div className="container">
         {users.map((user) => {
-          return <Cards user={user} />;
+          return (
+            <Cards
+              user={user}
+              teamMembers={teamMembers}
+              setTeamMembers={setTeamMembers}
+            />
+          );
         })}
         <Pagination
           className="pagination"
