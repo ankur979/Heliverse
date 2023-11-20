@@ -13,11 +13,11 @@ app.use(express.json());
 app.use("/api", require("./routes/users"));
 app.use("/api", require("./routes/teams"))
 
-app.use(express.static("build"));
+app.use(express.static("client/build"));
 
 // Serve index.html for any unspecified routes
 app.get("/*", function (req, res) {
-  res.sendFile(__dirname + "/build/index.html");
+  res.sendFile(__dirname + "/client/build/index.html");
 });
 
 app.listen(port, () => {
