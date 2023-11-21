@@ -64,7 +64,7 @@ const Home = ({search}) => {
         <ModalTeam teamMembers={Array.from(teamMembers)} />
       </div>
       <div className="container">
-        {users.map((user) => {
+        {users?.map((user) => {
           return (
             <Cards
               user={user}
