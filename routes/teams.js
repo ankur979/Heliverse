@@ -7,9 +7,8 @@ const Team = require("../models/teams");
 // Create a team
 router.post("/team", async (req, res) => {
   try {
-    const teamMembers = req.body.teamMembers; // Assuming the client sends an array of user IDs as members
+    const teamMembers = req.body.teamMembers; 
     const name = req.body.name;
-    console.log(teamMembers)
     const selectedUsers = await User.find({ _id: { $in: teamMembers } });
     console.log(selectedUsers)
     const isTeamValid = isTeamValidForCreation(selectedUsers);
@@ -30,7 +29,7 @@ router.post("/team", async (req, res) => {
       .json({ message: "Team created successfully", team: selectedUsers });
   } catch (error) {
     console.error("Error creating team:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -51,13 +50,13 @@ router.get("/team/:id", async (req, res) => {
     const team = await Team.findById(teamId).populate("members");
 
     if (!team) {
-      return res.status(404).json({ error: "Team not found" });
+      return res.status(404).json({ message: "Team not found" });
     }
 
     res.json(team);
   } catch (error) {
     console.error("Error fetching team details:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

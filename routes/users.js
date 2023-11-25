@@ -68,7 +68,7 @@ router.post("/users", async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     console.error("Error creating user:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -83,13 +83,13 @@ router.put("/users/:id", async (req, res) => {
     });
 
     if (!updatedUser) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json(updatedUser);
   } catch (error) {
     console.error("Error updating user:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -101,13 +101,13 @@ router.delete("/users/:id", async (req, res) => {
     const deletedUser = await User.findByIdAndDelete(userId);
 
     if (!deletedUser) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json(deletedUser);
   } catch (error) {
     console.error("Error deleting user:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

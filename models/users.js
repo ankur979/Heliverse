@@ -38,6 +38,20 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+userSchema.pre('save', async function (next) {
+  if (!this.isNew) {
+    return next();
+  }
+
+  try {
+    const highestUser = await this.constructor.findOne().sort('-id').exec();
+    this.id = highestUser ? highestUser.id + 1 : 1;
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

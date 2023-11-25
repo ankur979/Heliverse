@@ -14,7 +14,9 @@ const Cards = ({ user, teamMembers, setTeamMembers }) => {
         <div className="grid-child-gender">Gender: {user.gender}</div>
         <div className="grid-child-domain">Domain: {user.domain}</div>
         <div className="grid-child-email">email: {user.email}</div>
-        <div className="grid-child-available">available: {user.available?"true":"false"}</div>
+        <div className="grid-child-available">
+          available: {user.available ? "true" : "false"}
+        </div>
       </div>
       <button
         className="btn draw-border"
@@ -25,9 +27,16 @@ const Cards = ({ user, teamMembers, setTeamMembers }) => {
       <Modal user={user} />
       <button
         className="btn draw-border"
-        onClick={() => setTeamMembers(new Set([...teamMembers, user._id]))}
+        onClick={() => {
+          if (teamMembers.has(user._id)) {
+            teamMembers.delete(user._id);
+            setTeamMembers(new Set([...teamMembers]));
+          } else {
+            setTeamMembers(new Set([...teamMembers, user._id]));
+          }
+        }}
       >
-        Add Member
+        {teamMembers.has(user._id) ? "Selected" : "Select"}
       </button>
     </div>
   );

@@ -3,6 +3,8 @@ import "../modal/modal.css";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NewUser = () => {
   const [editedValues, setEditedValues] = useState({
@@ -11,7 +13,7 @@ const NewUser = () => {
     gender: "",
     domain: "",
     email: "",
-    id: "",
+    id: "1",
     available: "",
   });
   const dispatch = useDispatch();
@@ -25,9 +27,30 @@ const NewUser = () => {
     });
   };
 
+  const validateForm = () => {
+    let isValid = true;
+
+    for (const key in editedValues) {
+      if (editedValues[key].trim() === "") {
+        isValid = false;
+      }
+    }
+    return isValid;
+  };
+
   const handleSaveChanges = async () => {
-  await dispatch(createUser(editedValues));
-    navigate("/");
+    const isValid = validateForm();
+    if (!isValid) {
+      toast.error("Form has errors. Please fill in all required fields.", {
+        autoClose: 5000,
+      });
+      return;
+    }
+
+   const success =  await dispatch(createUser(editedValues));
+   if(success){
+     navigate("/");
+   }
   };
 
   const domain = [
@@ -43,16 +66,6 @@ const NewUser = () => {
   return (
     <div className="create">
       <div className="modal-content">
-        <div>
-          <input
-            className="form__input"
-            name="id"
-            type="number"
-            value={editedValues.id}
-            onChange={handleChange}
-            placeholder="Id"
-          />
-        </div>
         <div>
           <input
             className="form__input"
@@ -91,7 +104,7 @@ const NewUser = () => {
             value={editedValues.domain}
             onChange={handleChange}
           >
-            <option value={""}>select domain</option>
+            <option value={""}>Select domain</option>
             {domain.map((d) => {
               return (
                 <option value={d} key={d}>
@@ -109,7 +122,7 @@ const NewUser = () => {
             value={editedValues.gender}
             onChange={handleChange}
           >
-            <option value={""}>select gender</option>
+            <option value={""}>Select gender</option>
             {["Male", "Female", "Other"].map((g) => {
               return (
                 <option key={g} value={g}>
@@ -127,7 +140,7 @@ const NewUser = () => {
             value={editedValues.available}
             onChange={handleChange}
           >
-            <option value={""}>select available</option>
+            <option value={""}>Select available</option>
             {["true", "false"].map((g) => {
               return (
                 <option key={g} value={g}>

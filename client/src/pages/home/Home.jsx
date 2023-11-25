@@ -5,9 +5,9 @@ import { getUser } from "../../store/userSlice";
 import Cards from "../../components/card/Cards ";
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
-import ModalTeam from "../../components/modal/ModalTeam";
+import TeamModal from "../../components/modal/TeamModal";
 
-const Home = ({search}) => {
+const Home = ({ search }) => {
   const dispatch = useDispatch();
   const { users, userLength } = useSelector((e) => e.users);
   const [activePage, setActivePage] = useState(1);
@@ -16,8 +16,8 @@ const Home = ({search}) => {
   const [teamMembers, setTeamMembers] = useState(new Set([]));
 
   useEffect(() => {
-    dispatch(getUser(activePage, selectDomain, gender,search));
-  }, [activePage, selectDomain, gender,search]);
+    dispatch(getUser(activePage, selectDomain, gender, search));
+  }, [activePage, selectDomain, gender, search]);
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -34,34 +34,36 @@ const Home = ({search}) => {
   ];
 
   return (
-    <>
-      <div class="select">
-        <select
-          placeholder="domain"
-          onClick={(e) => setSelectDomain(e.target.value)}
-        >
-          <option value=""> select domain</option>
-          {domain.map((d) => {
-            return (
-              <option value={d} key={d}>
-                {d}
-              </option>
-            );
-          })}
-        </select>
-        <select onClick={(e) => setGender(e.target.value)}>
-          <option value="">Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-        <Link
-          className="btn draw-border"
-          style={{ textDecoration: "none", margin: "0", width: "27rem" }}
-          to={`/create`}
-        >
-          Create New User
-        </Link>
-        <ModalTeam teamMembers={Array.from(teamMembers)} />
+    <div className="home-page-container">
+      <div className="side-bar">
+        <TeamModal teamMembers={Array.from(teamMembers)}  setTeamMembers={setTeamMembers} />
+        <div className="select">
+          <select
+            placeholder="domain"
+            onClick={(e) => setSelectDomain(e.target.value)}
+          >
+            <option value=""> Select domain</option>
+            {domain.map((d) => {
+              return (
+                <option value={d} key={d}>
+                  {d}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="select">
+          <select onClick={(e) => setGender(e.target.value)}>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div className="select">
+          <Link className="link" to={`/create`}>
+            Create User
+          </Link>
+        </div>
       </div>
       <div className="container">
         {users?.map((user) => {
@@ -70,6 +72,7 @@ const Home = ({search}) => {
               user={user}
               teamMembers={teamMembers}
               setTeamMembers={setTeamMembers}
+              key={user._id}
             />
           );
         })}
@@ -82,7 +85,7 @@ const Home = ({search}) => {
           onChange={handlePageChange}
         />
       </div>
-    </>
+    </div>
   );
 };
 
