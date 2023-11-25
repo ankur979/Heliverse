@@ -34,7 +34,6 @@
 }
 
 .domain{
-    width: clamp(120px, 50vw, 420px);
     height: 2.5rem;
     padding: 0 1.25rem;
     border: 1px solid black;

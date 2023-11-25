@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -43,6 +45,7 @@ export const getUser =
       const { data } = await axios.get(link);
       dispatch(userSlice.actions.setAllUser(data));
     } catch (error) {
+      toast.error(error?.response?.data?.message, { autoClose: 5000 });
       console.error("Error fetching data:", error);
     }
   };
@@ -51,8 +54,9 @@ export const deleteUser = (id) => async (dispatch) => {
     let link = `${host}/api/users/${id}`;
     const { data } = await axios.delete(link);
     dispatch(userSlice.actions.setDeleteUser(data));
-    alert("User deleted successfully.");
+    toast.success("User deleted successfully.", { autoClose: 5000 });
   } catch (error) {
+    toast.error(error?.response?.data?.message, { autoClose: 5000 });
     console.error("Error fetching data:", error);
   }
 };
@@ -62,8 +66,9 @@ export const editUser = (id, newData) => async (dispatch) => {
     let link = `${host}/api/users/${id}`;
     const { data } = await axios.put(link, newData);
     dispatch(userSlice.actions.setEditUser(data));
-    alert("User updated successfully.");
+    toast.success("User updated successfully.", { autoClose: 5000 });
   } catch (error) {
+    toast.error(error?.response?.data?.message, { autoClose: 5000 });
     console.error("Error fetching data:", error);
   }
 };
@@ -71,11 +76,13 @@ export const editUser = (id, newData) => async (dispatch) => {
 export const createUser = (newData) => async (dispatch) => {
   try {
     let link = `${host}/api/users`;
-    const { data } = await axios.post(link,newData);
-    console.log(data)
-    alert("User created successfully.");
+    const { data } = await axios.post(link, newData);
+    toast.success("User created successfully.", { autoClose: 5000 });
+    return true;
   } catch (error) {
+    toast.error(error?.response?.data?.message, { autoClose: 5000 });
     console.error("Error fetching data:", error);
+    return false;
   }
 };
 

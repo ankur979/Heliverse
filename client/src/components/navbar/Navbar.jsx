@@ -4,19 +4,23 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ setSearch }) => {
   return (
-    <nav class="navbar">
-      <div class="logo">MUO</div>
+    <nav className="navbar">
+      <div className="logo">ANKUR</div>
       <div className="search">
-        <input type="text" placeholder="search user name" onChange={(e) => setSearch(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Search by name."
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
 
-      <ul class="nav-links">
+      <ul className="nav-links">
         <input type="checkbox" id="checkbox_toggle" />
-        <label for="checkbox_toggle" class="hamburger">
+        <label htmlFor="checkbox_toggle" className="hamburger">
           &#9776;
         </label>
 
-        <div class="menu">
+        <div className="menu">
           <li>
             <Link to={"/"}>Home</Link>
           </li>
